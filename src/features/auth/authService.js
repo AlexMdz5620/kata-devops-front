@@ -2,16 +2,34 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:8000/api/users/'
 
+//Creamos la peticion al backend para crear un usuario
 const register = async (userData) => {
-    const response = await axios.post(API_URL + 'register', userData)
+    const response = await axios.post(API_URL, userData)
+
+    return response.data
+}
+
+
+//Creamos la peticion al backend para logear un usuario
+const login = async (userData) => {
+    const response = await axios.post(API_URL + 'login', userData)
+
     if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))
-        }
-        return response.data
+    }
+
+    return response.data
 }
 
-const authServise = {
-    register
+//Logout a un usuario
+const logout = () => {
+    localStorage.removeItem('user')
 }
 
-export default authServise
+const authService = {
+    register,
+    login,
+    logout
+}
+
+export default authService
